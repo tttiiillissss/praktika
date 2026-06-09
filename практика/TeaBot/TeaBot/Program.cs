@@ -79,7 +79,7 @@ namespace TeaBotFinal
                     if (server.StartsWith("http://"))
                         server = server.Substring(7);
 
-                    Console.WriteLine($"✅ Подключено к серверу, ts={ts}");
+                    Console.WriteLine($"✅ подключено к серверу, ts={ts}");
                     Console.WriteLine("🎧 Бот слушает сообщения...");
 
                     while (true)
