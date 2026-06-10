@@ -35,3 +35,5 @@ C:\Users\Professionals\Desktop\практика вика\практика\TeaBot
 C:\Users\Professionals\Desktop\практика вика\практика\TeaBot\TeaBot\obj\Debug\TeaBot.csproj.Up2Date
 C:\Users\Professionals\Desktop\практика вика\практика\TeaBot\TeaBot\obj\Debug\TeaBot.exe
 C:\Users\Professionals\Desktop\практика вика\практика\TeaBot\TeaBot\obj\Debug\TeaBot.pdb
+C:\Users\Professionals\Desktop\практика вика\практика\TeaBot\TeaBot\bin\Debug\System.Data.SQLite.dll
+C:\Users\Professionals\Desktop\практика вика\практика\TeaBot\TeaBot\bin\Debug\System.Data.SQLite.xml

@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json.Linq;
+using System.Data.SQLite;
 
 namespace TeaBotFinal
 {
@@ -23,11 +24,16 @@ namespace TeaBotFinal
             Console.WriteLine("✅ Токен загружен");
             Console.WriteLine($"✅ ID группы: {groupId}");
             Console.WriteLine();
+
+            // Инициализация базы данных
+            DatabaseHelper.InitializeDatabase();
+
             Console.WriteLine("📋 ДОСТУПНЫЕ КОМАНДЫ:");
             Console.WriteLine("   • привет / начать");
             Console.WriteLine("   • прайс");
             Console.WriteLine("   • помощь");
             Console.WriteLine("   • акции");
+            Console.WriteLine("   • человек / менеджер");
             Console.WriteLine("   • пока");
             Console.WriteLine();
             Console.WriteLine("⏳ Ожидание сообщений...");
@@ -73,7 +79,6 @@ namespace TeaBotFinal
                         continue;
                     }
 
-                    // Убираем https:// из server, если оно там есть
                     if (server.StartsWith("https://"))
                         server = server.Substring(8);
                     if (server.StartsWith("http://"))
@@ -105,6 +110,10 @@ namespace TeaBotFinal
                                         if (userId != 0 && !string.IsNullOrEmpty(text))
                                         {
                                             Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Пользователь {userId}: {text}");
+
+                                            // Сохраняем пользователя в базу данных
+                                            DatabaseHelper.SaveUser(userId, "пользователь");
+
                                             string answer = GetAnswer(text);
                                             SendMessage(userId, answer);
                                         }
@@ -125,7 +134,14 @@ namespace TeaBotFinal
 
         static string GetAnswer(string text)
         {
-            if (text == "прайс" || text == "price")
+            if (text == "человек" || text == "менеджер" || text == "помощь")
+            {
+                return "👋 Сейчас я соединю вас с менеджером TEA.\n\n" +
+                       "Опишите одним сообщением ваш вопрос, и менеджер скоро ответит.\n\n" +
+                       "Ожидайте ответа в этом диалоге.\n\n" +
+                       "📌 Если вопрос срочный, позвоните нам: +7 (999) 123-45-67";
+            }
+            else if (text == "прайс" || text == "price")
             {
                 return "💰 ПРАЙС-ЛИСТ TEA 💰\n\n" +
                        "🇬🇧 Английский язык:\n" +
@@ -136,7 +152,7 @@ namespace TeaBotFinal
                        "   • Индивидуально — 1700₽/час\n" +
                        "   • Группа — 1000₽/час\n\n" +
                        "🎁 АКЦИЯ: Скидка 20% на первый месяц!\n\n" +
-                       "📞 По вопросам записи напишите ПОМОЩЬ";
+                       "📞 По вопросам записи напишите ЧЕЛОВЕК";
             }
             else if (text == "привет" || text == "начать" || text == "start")
             {
@@ -146,6 +162,7 @@ namespace TeaBotFinal
                        "   • ПРАЙС — посмотреть цены\n" +
                        "   • ПОМОЩЬ — контакты\n" +
                        "   • АКЦИИ — скидки\n" +
+                       "   • ЧЕЛОВЕК — позвать менеджера\n" +
                        "   • ПОКА — завершить диалог\n\n" +
                        "Напишите нужную команду!";
             }
@@ -156,14 +173,16 @@ namespace TeaBotFinal
                        "• Email: tea@school.ru\n" +
                        "• Адрес: ул. Ленина, д. 10\n\n" +
                        "🕐 Режим работы: Пн-Сб с 10:00 до 20:00\n\n" +
-                       "Напишите ПРАЙС чтобы узнать стоимость занятий.";
+                       "Напишите ПРАЙС чтобы узнать стоимость занятий.\n\n" +
+                       "Или напишите ЧЕЛОВЕК — менеджер поможет лично.";
             }
             else if (text == "акции")
             {
                 return "🎁 ТЕКУЩИЕ АКЦИИ TEA 🎁\n\n" +
                        "1️⃣ Скидка 20% на первый месяц обучения\n" +
                        "2️⃣ Приведи друга — получи урок в подарок\n" +
-                       "3️⃣ Оплата за месяц — один урок бесплатно";
+                       "3️⃣ Оплата за месяц — один урок бесплатно\n\n" +
+                       "По вопросам акций напишите ЧЕЛОВЕК";
             }
             else if (text == "пока" || text == "до свидания")
             {
@@ -177,6 +196,7 @@ namespace TeaBotFinal
                        "   • ПРАЙС — стоимость занятий\n" +
                        "   • ПОМОЩЬ — контакты\n" +
                        "   • АКЦИИ — текущие скидки\n" +
+                       "   • ЧЕЛОВЕК — позвать менеджера\n" +
                        "   • ПОКА — завершить диалог";
             }
         }
