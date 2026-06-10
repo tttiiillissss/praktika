@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Professionals\\Desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\TeaBot\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|c:\\users\\professionals\\desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\teabot\\teabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|solutionrelative:teabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|c:\\users\\professionals\\desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\teabot\\teabot\\languagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|solutionrelative:teabot\\languagetest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|c:\\users\\professionals\\desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\teabot\\teabot\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|solutionrelative:teabot\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|c:\\users\\professionals\\desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\teabot\\teabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C9F1E161-C6E6-485C-AA11-2480F651010F}|TeaBot\\TeaBot.csproj|solutionrelative:teabot\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,8 +22,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LanguageTest.cs",
+              "DocumentMoniker": "C:\\Users\\Professionals\\Desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\TeaBot\\TeaBot\\LanguageTest.cs",
+              "RelativeDocumentMoniker": "TeaBot\\LanguageTest.cs",
+              "ToolTip": "C:\\Users\\Professionals\\Desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\TeaBot\\TeaBot\\LanguageTest.cs*",
+              "RelativeToolTip": "TeaBot\\LanguageTest.cs*",
+              "ViewState": "AgIAABsAAAAAAAAAAADwv0AAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T12:11:58.433Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -28,20 +45,20 @@
               "RelativeDocumentMoniker": "TeaBot\\DatabaseHelper.cs",
               "ToolTip": "C:\\Users\\Professionals\\Desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\TeaBot\\TeaBot\\DatabaseHelper.cs*",
               "RelativeToolTip": "TeaBot\\DatabaseHelper.cs*",
-              "ViewState": "AgIAABsAAAAAAAAAAADwv0AAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAHkAAAAAAAAAAADwv4kAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-10T11:57:28.97Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Professionals\\Desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\TeaBot\\TeaBot\\Program.cs",
               "RelativeDocumentMoniker": "TeaBot\\Program.cs",
               "ToolTip": "C:\\Users\\Professionals\\Desktop\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430 \u0432\u0438\u043A\u0430\\\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430\\TeaBot\\TeaBot\\Program.cs*",
               "RelativeToolTip": "TeaBot\\Program.cs*",
-              "ViewState": "AgIAAMEAAAAAAAAAAADwv+YAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAOsAAAAAAAAAAADwvxABAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-09T10:27:44.696Z",
               "EditorCaption": ""

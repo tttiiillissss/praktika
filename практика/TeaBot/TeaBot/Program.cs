@@ -25,19 +25,7 @@ namespace TeaBotFinal
             Console.WriteLine($"✅ ID группы: {groupId}");
             Console.WriteLine();
 
-            // Инициализация базы данных
             DatabaseHelper.InitializeDatabase();
-
-            Console.WriteLine("📋 ДОСТУПНЫЕ КОМАНДЫ:");
-            Console.WriteLine("   • привет / начать");
-            Console.WriteLine("   • прайс");
-            Console.WriteLine("   • помощь");
-            Console.WriteLine("   • акции");
-            Console.WriteLine("   • человек / менеджер");
-            Console.WriteLine("   • пока");
-            Console.WriteLine();
-            Console.WriteLine("⏳ Ожидание сообщений...");
-            Console.WriteLine();
 
             RunBot();
         }
@@ -85,7 +73,6 @@ namespace TeaBotFinal
                         server = server.Substring(7);
 
                     Console.WriteLine($"✅ Подключено к серверу, ts={ts}");
-                    Console.WriteLine("🎧 Бот слушает сообщения...");
 
                     while (true)
                     {
@@ -111,11 +98,10 @@ namespace TeaBotFinal
                                         {
                                             Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Пользователь {userId}: {text}");
 
-                                            // Сохраняем пользователя в базу данных
                                             DatabaseHelper.SaveUser(userId, "пользователь");
 
-                                            string answer = GetAnswer(text);
-                                            SendMessage(userId, answer);
+                                            string answer = GetAnswer(userId, text);
+                                            SendMessage(userId, answer, GetKeyboard());
                                         }
                                     }
                                 }
@@ -132,87 +118,105 @@ namespace TeaBotFinal
             }
         }
 
-        static string GetAnswer(string text)
+        static string GetAnswer(long userId, string text)
         {
-            if (text == "человек" || text == "менеджер" || text == "помощь")
+            // Нормализуем текст
+            text = NormalizeText(text);
+
+            // Проверяем, проходит ли пользователь тест
+            if (LanguageTest.IsUserTesting(userId))
             {
-                return "👋 Сейчас я соединю вас с менеджером TEA.\n\n" +
-                       "Опишите одним сообщением ваш вопрос, и менеджер скоро ответит.\n\n" +
-                       "Ожидайте ответа в этом диалоге.\n\n" +
-                       "📌 Если вопрос срочный, позвоните нам: +7 (999) 123-45-67";
+                return LanguageTest.ProcessAnswer(userId, text);
+            }
+
+            // Команды
+            if (text == "привет" || text == "начать" || text == "start")
+            {
+                string userLang = DatabaseHelper.GetUserLanguage(userId);
+                string userLevel = DatabaseHelper.GetUserLevel(userId);
+                string info = "";
+                if (!string.IsNullOrEmpty(userLang)) info += $"\n📍 Ваш язык: {userLang}";
+                if (!string.IsNullOrEmpty(userLevel)) info += $"\n🎯 Ваш уровень: {userLevel}";
+                return "🌟 Добро пожаловать в TEA!\n\nЯ бот школы иностранных языков TEA.\n\nНажмите на кнопки ниже!" + info;
             }
             else if (text == "прайс" || text == "price")
             {
-                return "💰 ПРАЙС-ЛИСТ TEA 💰\n\n" +
-                       "🇬🇧 Английский язык:\n" +
-                       "   • Индивидуально — 1500₽/час\n" +
-                       "   • В паре — 1000₽/час\n" +
-                       "   • Группа (4-6 чел) — 800₽/час\n\n" +
-                       "🇨🇳 Китайский язык:\n" +
-                       "   • Индивидуально — 1700₽/час\n" +
-                       "   • Группа — 1000₽/час\n\n" +
-                       "🎁 АКЦИЯ: Скидка 20% на первый месяц!\n\n" +
-                       "📞 По вопросам записи напишите ЧЕЛОВЕК";
-            }
-            else if (text == "привет" || text == "начать" || text == "start")
-            {
-                return "🌟 Добро пожаловать в TEA!\n\n" +
-                       "Я бот школы иностранных языков TEA.\n\n" +
-                       "📋 Доступные команды:\n" +
-                       "   • ПРАЙС — посмотреть цены\n" +
-                       "   • ПОМОЩЬ — контакты\n" +
-                       "   • АКЦИИ — скидки\n" +
-                       "   • ЧЕЛОВЕК — позвать менеджера\n" +
-                       "   • ПОКА — завершить диалог\n\n" +
-                       "Напишите нужную команду!";
-            }
-            else if (text == "помощь" || text == "help")
-            {
-                return "📞 КОНТАКТЫ TEA:\n\n" +
-                       "• Телефон: +7 (999) 123-45-67\n" +
-                       "• Email: tea@school.ru\n" +
-                       "• Адрес: ул. Ленина, д. 10\n\n" +
-                       "🕐 Режим работы: Пн-Сб с 10:00 до 20:00\n\n" +
-                       "Напишите ПРАЙС чтобы узнать стоимость занятий.\n\n" +
-                       "Или напишите ЧЕЛОВЕК — менеджер поможет лично.";
+                return "💰 ПРАЙС-ЛИСТ TEA 💰\n\nАнглийский язык:\n• Индивидуально — 1500₽/час\n• В паре — 1000₽/час\n• Группа — 800₽/час\n\nКитайский язык:\n• Индивидуально — 1700₽/час\n• Группа — 1000₽/час";
             }
             else if (text == "акции")
             {
-                return "🎁 ТЕКУЩИЕ АКЦИИ TEA 🎁\n\n" +
-                       "1️⃣ Скидка 20% на первый месяц обучения\n" +
-                       "2️⃣ Приведи друга — получи урок в подарок\n" +
-                       "3️⃣ Оплата за месяц — один урок бесплатно\n\n" +
-                       "По вопросам акций напишите ЧЕЛОВЕК";
+                return "🎁 АКЦИИ TEA 🎁\n\n1️⃣ Скидка 20% на первый месяц\n2️⃣ Приведи друга — урок в подарок\n3️⃣ Оплата за месяц — урок бесплатно";
+            }
+            else if (text == "помощь")
+            {
+                return "📞 КОНТАКТЫ TEA:\n\n• Телефон: +7 (999) 123-45-67\n• Email: tea@school.ru\n• Адрес: ул. Ленина, д. 10\n\n🕐 Режим работы: Пн-Сб с 10:00 до 20:00";
+            }
+            else if (text == "человек" || text == "менеджер")
+            {
+                return "👋 Сейчас я соединю вас с менеджером TEA.\n\nОпишите вопрос, менеджер скоро ответит.\n\n📌 +7 (999) 123-45-67";
+            }
+            else if (text == "выбрать язык" || text == "язык")
+            {
+                return "🗣 ВЫБЕРИТЕ ЯЗЫК:\n\n🇬🇧 Английский\n🇨🇳 Китайский\n🇯🇵 Японский\n🇰🇷 Корейский\n🇪🇸 Испанский\n🇫🇷 Французский\n🇩🇪 Немецкий\n🇮🇹 Итальянский\n🇹🇷 Турецкий\n\nНапишите название языка";
+            }
+            else if (text == "тест" || text == "пройти тест")
+            {
+                string userLang = DatabaseHelper.GetUserLanguage(userId);
+                if (string.IsNullOrEmpty(userLang))
+                {
+                    return "❓ Сначала выберите язык! Напишите ВЫБРАТЬ ЯЗЫК";
+                }
+                return LanguageTest.StartTest(userId);
             }
             else if (text == "пока" || text == "до свидания")
             {
-                return "👋 До свидания! Будем рады видеть вас снова в TEA!";
+                return "👋 До свидания! Будем рады видеть вас снова!";
             }
             else
             {
-                return "❓ Я не понял ваш запрос.\n\n" +
-                       "Пожалуйста, используйте команды:\n" +
-                       "   • ПРИВЕТ — приветствие\n" +
-                       "   • ПРАЙС — стоимость занятий\n" +
-                       "   • ПОМОЩЬ — контакты\n" +
-                       "   • АКЦИИ — текущие скидки\n" +
-                       "   • ЧЕЛОВЕК — позвать менеджера\n" +
-                       "   • ПОКА — завершить диалог";
+                // Обработка выбора языка
+                string selectedLang = null;
+
+                if (text.Contains("итальянский") || text == "итальянский" || text == "итал")
+                    selectedLang = "итальянский";
+                else if (text.Contains("английский") || text == "английский" || text == "англ")
+                    selectedLang = "английский";
+                else if (text.Contains("китайский") || text == "китайский" || text == "кит")
+                    selectedLang = "китайский";
+                else if (text.Contains("японский") || text == "японский" || text == "яп")
+                    selectedLang = "японский";
+                else if (text.Contains("корейский") || text == "корейский" || text == "кор")
+                    selectedLang = "корейский";
+                else if (text.Contains("испанский") || text == "испанский" || text == "исп")
+                    selectedLang = "испанский";
+                else if (text.Contains("французский") || text == "французский" || text == "франц")
+                    selectedLang = "французский";
+                else if (text.Contains("немецкий") || text == "немецкий" || text == "нем")
+                    selectedLang = "немецкий";
+                else if (text.Contains("турецкий") || text == "турецкий" || text == "тур")
+                    selectedLang = "турецкий";
+
+                if (selectedLang != null)
+                {
+                    DatabaseHelper.SaveUserLanguage(userId, selectedLang);
+                    return $"✅ Вы выбрали {selectedLang} язык!\n\nТеперь напишите ТЕСТ";
+                }
+
+                return "❓ Я не понял. Используйте кнопки меню:\n• ПРИВЕТ\n• ПРАЙС\n• АКЦИИ\n• ПОМОЩЬ\n• ВЫБРАТЬ ЯЗЫК\n• ТЕСТ\n• ЧЕЛОВЕК\n• ПОКА";
             }
         }
 
-        static void SendMessage(long userId, string text)
+        static void SendMessage(long userId, string text, string keyboard = null)
         {
             try
             {
-                string url = $"https://api.vk.com/method/messages.send?peer_id={userId}&message={Uri.EscapeDataString(text)}&random_id={new Random().Next()}&access_token={token}&v=5.131&group_id={groupId}";
+                string url = $"https://api.vk.com/method/messages.send?user_id={userId}&message={Uri.EscapeDataString(text)}&random_id={new Random().Next()}&access_token={token}&v=5.131&group_id={groupId}";
+                if (!string.IsNullOrEmpty(keyboard))
+                {
+                    url += $"&keyboard={Uri.EscapeDataString(keyboard)}";
+                }
                 string response = Get(url);
                 Console.WriteLine($"✅ Ответ отправлен");
-
-                if (response.Contains("\"error\""))
-                {
-                    Console.WriteLine($"⚠️ Ошибка API: {response}");
-                }
             }
             catch (Exception ex)
             {
@@ -226,6 +230,44 @@ namespace TeaBotFinal
             {
                 return wc.DownloadString(url);
             }
+        }
+
+        static string GetKeyboard()
+        {
+            return @"
+            {
+                ""one_time"": false,
+                ""buttons"": [
+                    [
+                        { ""action"": { ""type"": ""text"", ""label"": ""🌟 Привет"" }, ""color"": ""positive"" },
+                        { ""action"": { ""type"": ""text"", ""label"": ""💰 Прайс"" }, ""color"": ""primary"" }
+                    ],
+                    [
+                        { ""action"": { ""type"": ""text"", ""label"": ""🎁 Акции"" }, ""color"": ""primary"" },
+                        { ""action"": { ""type"": ""text"", ""label"": ""📞 Помощь"" }, ""color"": ""secondary"" }
+                    ],
+                    [
+                        { ""action"": { ""type"": ""text"", ""label"": ""🗣 Выбрать язык"" }, ""color"": ""primary"" },
+                        { ""action"": { ""type"": ""text"", ""label"": ""📝 Тест"" }, ""color"": ""primary"" }
+                    ],
+                    [
+                        { ""action"": { ""type"": ""text"", ""label"": ""👨‍💼 Позвать человека"" }, ""color"": ""negative"" },
+                        { ""action"": { ""type"": ""text"", ""label"": ""👋 Пока"" }, ""color"": ""secondary"" }
+                    ]
+                ]
+            }";
+        }
+
+        static string NormalizeText(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            string result = text.ToLower().Trim();
+            string[] emojis = { "🌟", "💰", "🎁", "📞", "🗣", "📝", "👨‍💼", "👋", "✅", "❓", "📍", "🎯", "✔", "🇬🇧", "🇨🇳", "🇯🇵", "🇰🇷", "🇪🇸", "🇫🇷", "🇩🇪", "🇮🇹", "🇹🇷" };
+            foreach (string emoji in emojis)
+            {
+                result = result.Replace(emoji, "");
+            }
+            return result.Trim();
         }
     }
 }
