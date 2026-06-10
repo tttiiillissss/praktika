@@ -8,8 +8,8 @@ namespace TeaBotFinal
 {
     class Program
     {
-        static string token = "vk1.a.1FobaNuXZzvkO24OGb819d_ihWbXjrLc_8S05xT5zsZYZHdc7yJut8raIiewblOy-6muFMIxMpno0XODXed3Zr5A7I9UgYbDRp3qu1stduhMHMjxwh0jnkcsKq0QFfh9Cpm7YB7raqj66zf9iq2t_FVWmL7JY_IGLMbSomT1FxZHGGaw5lStXXX4sLbtQR74l9h46mYC0AdBppdwPlXW8g";
-        static ulong groupId = 239455819;
+        static string token = "vk1.a.Po_6P3j_XoRdiFpVIGlSqk_9qRteM-tJ5nRF5w4NYg_CMhgesGQFS-747uxPn0qpY87C0fOV80TclfKmcjUOi2zwuecUMua0QU69zbj0MoIb10gTi0ydkz5dyS1CAe-VhUexyH5uepVEA-Uioq30dp8bB_D4Iz2ltxMWva72p0KKwr6oLMg3QQQ8NDUb9G3qaKD8X1n5YKKrzXfxCN2z0A";
+        static ulong groupId = 239482439;
 
         static void Main()
         {
@@ -17,7 +17,7 @@ namespace TeaBotFinal
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
             Console.WriteLine("╔══════════════════════════════════════╗");
-            Console.WriteLine("║        🤖 TEA БОТ ЗАПУЩЕН 🤖         ║");
+            Console.WriteLine("║            TEA БОТ ЗАПУЩЕН           ║");
             Console.WriteLine("╚══════════════════════════════════════╝");
             Console.WriteLine();
             Console.WriteLine("✅ Токен загружен");
@@ -79,7 +79,7 @@ namespace TeaBotFinal
                     if (server.StartsWith("http://"))
                         server = server.Substring(7);
 
-                    Console.WriteLine($"✅ подключено к серверу, ts={ts}");
+                    Console.WriteLine($"✅ Подключено к серверу, ts={ts}");
                     Console.WriteLine("🎧 Бот слушает сообщения...");
 
                     while (true)
